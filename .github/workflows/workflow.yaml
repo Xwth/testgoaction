@@ -16,6 +16,6 @@ jobs:
       - name: Publish to registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: test/repo
+          name: xwth/test
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
