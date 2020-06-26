@@ -1,4 +1,7 @@
-on: push
+on:
+  push:
+    branches:
+      - master
 name: My test Action
 jobs:
   checks:
@@ -7,5 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: run
+      - name: Golang run
         uses: cedrickring/golang-action@1.5.2
+
+      - name: Publish to registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: test/repo
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
