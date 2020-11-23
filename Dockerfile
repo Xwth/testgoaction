@@ -22,4 +22,4 @@ FROM scratch
 # Copy our static executable built, from-to path
 COPY --from=builder /go/bin/test /go/bin/test
 
-ENTRYPOINT [ "test" ]
+ENTRYPOINT [ "/go/bin/test" ]
