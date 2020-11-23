@@ -20,6 +20,6 @@ RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o $GOPATH/bin/test
 FROM scratch
 
 # Copy our static executable built, from-to path
-COPY --from=builder $GOPATH/bin/test /go/bin/test
+COPY --from=builder /go/bin/test /go/bin/test
 
 ENTRYPOINT [ "test" ]
