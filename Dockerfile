@@ -14,12 +14,12 @@ RUN go get -d -v
 
 # Builds the binary to the output specified
 # And compiles only to linux for smaller foot print
-RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/test
+RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o $GOPATH/bin/test
 
 # Step 2, build a small image
 FROM scratch
 
 # Copy our static executable built, from-to path
-COPY --from=builder /go/bin/test /go/bin/test
+COPY --from=builder $GOPATH/bin/test $GOPATH/bin/test
 
-CMD ["test"]
+ENTRYPOINT [ "go/bin/test" ]
