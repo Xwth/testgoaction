@@ -10,7 +10,7 @@ jobs:
 
       - name: Test project
         uses: actions/setup-go@v2
-        run: go test -v
+      - run: go test -v
 
   build:
     name: Build
