@@ -67,6 +67,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
+      - name: ls debug thing? idk
+        run: ls
+
       - name: Build, Push and Deploy to Heroku
         id: heroku
         uses: jctaveras/heroku-deploy@v1.0.0
