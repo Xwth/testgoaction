@@ -3,8 +3,31 @@ on: push
 name: Test and Publish builds on push
 
 jobs:
+  staticcheck:
+    name: Static check and Caching modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Static Check
+        run: |
+          # add executables installed with go get to PATH
+          # TODO: this will hopefully be fixed by
+          # https://github.com/actions/setup-go/issues/14
+          export PATH=${PATH}:`go env GOPATH`/bin
+          go get -u honnef.co/go/tools/cmd/staticcheck
+          staticcheck ./...
+      - name: Cache Go modules
+        uses: actions/cache@preview
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-build-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
   test:
     name: Test
+    needs: staticcheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
