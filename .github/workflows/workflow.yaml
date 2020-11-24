@@ -68,7 +68,10 @@ jobs:
       - uses: actions/checkout@master
 
       - name: ls debug thing? idk
-        run: ls
+        run: |
+          ls
+          pwd
+          echo .
 
       - name: Build, Push and Deploy to Heroku
         id: heroku
