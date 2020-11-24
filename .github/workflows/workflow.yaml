@@ -71,7 +71,6 @@ jobs:
         run: |
           ls
           pwd
-          .
 
       - name: Build, Push and Deploy to Heroku
         id: heroku
