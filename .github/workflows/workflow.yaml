@@ -3,31 +3,31 @@ on: push
 name: Test and Publish builds on push
 
 jobs:
-  staticcheck:
-    name: Static check and Caching modules
-    runs-on: ubuntu-latest
-    steps:
-      - name: Static Check
-        run: |
-          # add executables installed with go get to PATH
-          # TODO: this will hopefully be fixed by
-          # https://github.com/actions/setup-go/issues/14
-          export PATH=${PATH}:`go env GOPATH`/bin
-          go get -u honnef.co/go/tools/cmd/staticcheck
-          staticcheck ./...
-      - name: Cache Go modules
-        uses: actions/cache@preview
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-build-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-${{ env.cache-name }}-
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
+  # staticcheck:
+  #   name: Static check and Caching modules
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Static Check
+  #       run: |
+  #         # add executables installed with go get to PATH
+  #         # TODO: this will hopefully be fixed by
+  #         # https://github.com/actions/setup-go/issues/14
+  #         export PATH=${PATH}:`go env GOPATH`/bin
+  #         go get -u honnef.co/go/tools/cmd/staticcheck
+  #         staticcheck ./...
+  #     - name: Cache Go modules
+  #       uses: actions/cache@preview
+  #       with:
+  #         path: ~/go/pkg/mod
+  #         key: ${{ runner.os }}-build-${{ hashFiles('**/go.sum') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-build-${{ env.cache-name }}-
+  #           ${{ runner.OS }}-build-
+  #           ${{ runner.OS }}-
 
   test:
     name: Test
-    needs: staticcheck
+    # needs: staticcheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -74,6 +74,6 @@ jobs:
           email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
           api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
           app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplication name
-          dockerfile_path: "" # set the path to the folder wher the Dokerfile is located
+          dockerfile_path: "." # set the path to the folder wher the Dokerfile is located
           options: "" # Docker Build Options
           formation: "" # Docker Dyno Formation. By default is web
