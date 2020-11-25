@@ -9,7 +9,7 @@ jobs:
   heroku:
     name: Deploy to heroku
     runs-on: ubuntu-latest
-    needs: [build]
+    # needs: [build]
     steps:
       - uses: actions/checkout@master
 
