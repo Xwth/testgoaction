@@ -1,3 +1,4 @@
+on: workflow_dispatch
 name: Publishes to Dockerhub registry
 jobs:
   publish:
